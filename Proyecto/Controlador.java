@@ -23,7 +23,7 @@ public class Controlador {
         
     }
 
-    public int getPosicion(int num, String Aliado_Enemigo_Principal){
+    public int getPosicion(int num, String X_Y, String Aliado_Enemigo_Principal){
         return 1;
     }
 }
