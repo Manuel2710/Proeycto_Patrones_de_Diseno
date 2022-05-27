@@ -18,46 +18,48 @@ public class Atacante extends Entidades implements Observer{
         return;
     }
     public boolean getAyudando_Atacando() {
+        Mover();
         return Ayudando_Atacando;
     }
 
+    public int getPosicion(String cual){
+        if (cual=="X"){
+            return PosicionX;
+        }
+        else{
+            return PosicionY;
+        }
+    }
+
+    public boolean getvisible(){
+        return true;
+    }
+
     public void Mover(){
-        boolean ciclo =true;
-        while (ciclo){//En caso de que de un numero que lo vaya a sacar de pantalla
-            switch (rand.nextInt(4+1)){//Se estipula el proximo movimiento
-                case 1:
-                    if (PosicionX>0){
-                        PosicionX=PosicionX-1;
-                        ciclo=false;
-                        break;
-                    }
-                case 2:
-                    if (PosicionX<50){
-                        PosicionX=PosicionX+1;
-                        ciclo=false;
-                        break;
-                    }
-                case 3:
-                    if (PosicionY>0){ 
-                        PosicionY=PosicionY-1;
-                        ciclo=false;
-                        break;
-                    }
-                case 4:
-                    if (PosicionY<50){
-                        PosicionY=PosicionY+1;
-                        ciclo=false;
-                        break;
-                    }
+        if (PosicionXPrincipal>PosicionX){
+            PosicionX=PosicionX+1;
+        }
+        if (PosicionXPrincipal<PosicionX){
+            PosicionX=PosicionX-1;
+        }
+        if (PosicionXPrincipal==PosicionX){
+            if (PosicionYPrincipal>PosicionY){
+                PosicionY=PosicionY+1;
+            }
+            if (PosicionYPrincipal<PosicionY){
+                PosicionY=PosicionY-1;
+            }
+            if (PosicionXPrincipal == PosicionX && PosicionYPrincipal == PosicionY){
+                Ayudando_Atacando=true;
             }
         }
     }
 
     public void update(int CordenadaX, int CordenadaY, boolean Ataque, String Direccion) {
+        PosicionXPrincipal = CordenadaX;
+        PosicionYPrincipal = CordenadaY;
         if (PosicionX == CordenadaX && PosicionY == CordenadaY){
             Ayudando_Atacando=true;
-            PosicionXPrincipal = CordenadaX;
-            PosicionYPrincipal = CordenadaY;
         }
         else{
             if(Ataque==true){

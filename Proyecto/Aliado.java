@@ -8,8 +8,6 @@ public class Aliado extends Entidades implements Observer{
         visible = false;
         PosicionX=rand.nextInt(50+1);
         PosicionY=rand.nextInt(50+1);
-        
-        
     }
     //Se restablece la vida y se genera una nueva ubicación
     public void VolverAparecer(){
@@ -23,6 +21,19 @@ public class Aliado extends Entidades implements Observer{
     }
     public boolean getAyudando_Atacando() {
         return Ayudando_Atacando;
+    }
+
+    public int getPosicion(String cual){
+        if (cual=="X"){
+            return PosicionX;
+        }
+        else{
+            return PosicionY;
+        }
+    }
+
+    public boolean getvisible(){
+        return visible;
     }
 
     public void update(int CordenadaX, int CordenadaY, boolean Ataque, String Direccion) {

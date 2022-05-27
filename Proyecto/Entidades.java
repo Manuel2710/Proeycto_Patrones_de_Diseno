@@ -8,4 +8,6 @@ public abstract class Entidades {
         
         public abstract void VolverAparecer();
         public abstract boolean getAyudando_Atacando();
+        public abstract int getPosicion(String cual);
+        public abstract boolean getvisible();
 }
