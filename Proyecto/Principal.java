@@ -24,23 +24,23 @@ public class Principal implements Observado{
             case "Izquierda":
                 if (PosicionX>0){
                     PosicionX=PosicionX-1;
-                    break;
                 }
+                break;
             case "Derecha":
                 if (PosicionX<50){
                     PosicionX=PosicionX+1;
-                    break;
                 }
+                break;
             case "Arriba":
                 if (PosicionY>0){ 
                     PosicionY=PosicionY-1;
-                    break;
                 }
+                break;
             case "Abajo":
                 if (PosicionY<50){
                     PosicionY=PosicionY+1;
-                    break;
                 }
+                break;
             }
         notificarObserver();
     }

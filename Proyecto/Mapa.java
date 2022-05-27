@@ -1,13 +1,8 @@
-import java.awt.BorderLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Mapa extends JFrame implements KeyListener{
+public class Mapa extends JFrame{
     private ListaPixeles pixeles;
     Controlador central = new Controlador();
     int Ciclo1;
@@ -18,11 +13,7 @@ public class Mapa extends JFrame implements KeyListener{
 
     public Mapa(){
         pixeles = new ListaPixeles();
-        JButton derecha = new JButton("Derecha");
-        JButton izquierda = new JButton("izquierda");
-        JButton arriba = new JButton("arriba");
-        JButton abajo = new JButton("abajo");
-        JButton ataque = new JButton("ataque");
+        
         Atacando=1;
         CantidadAliados=20;
         CantidadEnemigos=6;
@@ -34,102 +25,14 @@ public class Mapa extends JFrame implements KeyListener{
             }
         }
         Ciclo1=0;
-        ////////////////////////////////////////////////////////////
-        derecha.addActionListener (new ActionListener () {    
-            @Override
-            public void actionPerformed (ActionEvent e) {
-                central.Accion_Principal("Derecha");
-                cuadros();
-                central.Accion_Enemigo_Aliado();
-                cuadros();
-            }
-        });
-        izquierda.addActionListener (new ActionListener () {    
-            @Override
-            public void actionPerformed (ActionEvent e) {
-                central.Accion_Principal("Izquierda");
-                cuadros();
-                central.Accion_Enemigo_Aliado();
-                cuadros();
-            }
-        });
-        arriba.addActionListener (new ActionListener () {    
-            @Override
-            public void actionPerformed (ActionEvent e) {
-                central.Accion_Principal("Arriba");
-                cuadros();
-                central.Accion_Enemigo_Aliado();
-                cuadros();
-            }
-        });
-        abajo.addActionListener (new ActionListener () {    
-            @Override
-            public void actionPerformed (ActionEvent e) {
-                central.Accion_Principal("Abajo");
-                cuadros();
-                central.Accion_Enemigo_Aliado();
-                cuadros();
-            }
-        });
-        ataque.addActionListener (new ActionListener () {    
-            @Override
-            public void actionPerformed (ActionEvent e) {
-                central.Accion_Principal("Ataque");
-                cuadros();
-                central.Accion_Enemigo_Aliado();
-                Atacando=2;
-                cuadros();
-            }
-        });
+        EventosDeTeclado teclado = new EventosDeTeclado();
+        addKeyListener(teclado);
         //////////////////////////////////////////////////////////////
         add(pixeles);
-        //add(arriba,BorderLayout.NORTH);
-        add(derecha,BorderLayout.EAST);
-        add(abajo,BorderLayout.SOUTH);
-        add(izquierda,BorderLayout.WEST);
-        add(ataque,BorderLayout.NORTH);
-    }
-
-@Override
-    public void keyTyped(KeyEvent e) {
-        if (e.getKeyChar()=='W' || e.getKeyChar()=='w'){
-            System.out.println("w");
-        }
-        if (e.getKeyChar()=='S' || e.getKeyChar()=='s'){
-            System.out.println("s");
-        }
-        if (e.getKeyChar()=='A' || e.getKeyChar()=='a'){
-            System.out.println("a");
-        }
-        if (e.getKeyChar()=='D' || e.getKeyChar()=='d'){
-            System.out.println("d");
-        }
-        
-    }
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getExtendedKeyCode()== KeyEvent.VK_UP){
-            System.out.println("up");
-        }
-        if (e.getExtendedKeyCode()== KeyEvent.VK_DOWN){
-            System.out.println("do");
-        }
-        if (e.getExtendedKeyCode()== KeyEvent.VK_LEFT){
-            System.out.println("le");
-        }
-        if (e.getExtendedKeyCode()== KeyEvent.VK_RIGHT){
-            System.out.println("ri");
-        }
-        
-    }
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
     
     public void cuadros(){
         //Elimina los cubos de la lista-Actualiza el tablero
-        CantidadAliados = central.getCantidad_entidades("Aliado");
-        CantidadEnemigos = central.getCantidad_entidades("Enemigo");
         if(Ciclo1>0){
             if (Atacando==1 || Atacando==2){
                 for(Ciclo1=0;Ciclo1<(1+CantidadAliados+CantidadEnemigos);Ciclo1++){
@@ -145,6 +48,8 @@ public class Mapa extends JFrame implements KeyListener{
                 }
             }
         }
+        CantidadAliados = central.getCantidad_entidades("Aliado");
+        CantidadEnemigos = central.getCantidad_entidades("Enemigo");
 
         for(Ciclo1=0;Ciclo1<CantidadAliados;Ciclo1++){
             if (central.getVisible(Ciclo1)==true){
@@ -194,5 +99,52 @@ public class Mapa extends JFrame implements KeyListener{
         ventana.setVisible(true);
     }
 
+    class EventosDeTeclado implements KeyListener{
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+                
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+                
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyChar()=='W' || e.getKeyChar()=='w'){
+                central.Accion_Principal("Arriba");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+            if (e.getKeyChar()=='S' || e.getKeyChar()=='s'){
+                central.Accion_Principal("Abajo");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+            if (e.getKeyChar()=='A' || e.getKeyChar()=='a'){
+                central.Accion_Principal("Izquierda");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+            if (e.getKeyChar()=='D' || e.getKeyChar()=='d'){
+                central.Accion_Principal("Derecha");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+            if (e.getKeyChar()==' '){
+                central.Accion_Principal("Ataque");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                Atacando=2;
+                cuadros();
+            }
+        }
+    }
     
 }
