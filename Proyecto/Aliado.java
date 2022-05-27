@@ -39,8 +39,19 @@ public class Aliado extends Entidades implements Observer{
     public void update(int CordenadaX, int CordenadaY, boolean Ataque, String Direccion) {
                 if (PosicionX == CordenadaX && PosicionY == CordenadaY){
                     Ayudando_Atacando=true;
-                    PosicionXPrincipal = CordenadaX;
-                    PosicionYPrincipal = CordenadaY;
                 }
+                if ((PosicionX-CordenadaX)<5 && (PosicionY-CordenadaY)<5){
+                    if ((PosicionX-CordenadaX)>-5 && (PosicionY-CordenadaY)>-5){
+                        visible=true;
+                    }
+                    else{
+                        visible=false;
+                    }
+                }
+                else{
+                    visible=false;
+                }
+                PosicionXPrincipal = CordenadaX;
+                PosicionYPrincipal = CordenadaY;
             }
 }

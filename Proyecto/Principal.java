@@ -14,6 +14,7 @@ public class Principal implements Observado{
         PosicionY = 0;
         Ataque = false;
         Vida = 3;
+        observadores = new ArrayList<Observer>();
     }
     public void Movimiento (String Mover){
         Movimiento = Mover;
@@ -41,6 +42,7 @@ public class Principal implements Observado{
                     break;
                 }
             }
+        notificarObserver();
     }
     public void PerderVida(){
         Vida=Vida-1;

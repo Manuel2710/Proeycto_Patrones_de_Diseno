@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Controlador {
     int Cantidad_Enemigos;
     int Cantidad_Aliados;
+    Entidades nuevo;
     int Ciclo;
     int turno;
     ArrayList<Entidades> misAtacantes = new ArrayList<>();
@@ -18,16 +19,26 @@ public class Controlador {
     }
 
     public void Accion_Principal(String Mov){
-        prota.Movimiento(Mov);
-        prota.Cambio_Posicion();
-        if (turno%3==0){
-            if (Cantidad_Aliados<5){
-            misAliados.add(creacion.construir("Aliado"));
-            Cantidad_Aliados+=1;
-            }
-            misAtacantes.add(creacion.construir("Atacante"));
-            Cantidad_Enemigos+=1;
+        if (Mov != "Ataque"){
+            prota.Movimiento(Mov);
+            prota.Cambio_Posicion();
+            if ((turno)%10==0){
+                if (Cantidad_Aliados<5){
+                    nuevo = creacion.construir("Aliado");
+                    prota.agregar(nuevo);
+                    misAliados.add(nuevo);
+                    Cantidad_Aliados+=1;
+                }
+                nuevo = creacion.construir("Atacante");
+                prota.agregar(nuevo);
+                misAtacantes.add(nuevo);
+                Cantidad_Enemigos+=1;
         }
+        else{
+            prota.Ataque=true;
+        }
+        turno=turno+1;
+    }
     }
 
     public void Accion_Enemigo_Aliado(){

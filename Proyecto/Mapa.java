@@ -1,4 +1,9 @@
+import java.awt.BorderLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,6 +17,11 @@ public class Mapa extends JFrame implements KeyListener{
 
     public Mapa(){
         pixeles = new ListaPixeles();
+        JButton derecha = new JButton("Derecha");
+        JButton izquierda = new JButton("izquierda");
+        JButton arriba = new JButton("arriba");
+        JButton abajo = new JButton("abajo");
+        JButton ataque = new JButton("ataque");
         CantidadAliados=20;
         CantidadEnemigos=6;
         //Se imprime el tablero
@@ -22,16 +32,62 @@ public class Mapa extends JFrame implements KeyListener{
             }
         }
         Ciclo1=0;
+        ////////////////////////////////////////////////////////////
+        derecha.addActionListener (new ActionListener () {    
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                central.Accion_Principal("Derecha");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+        });
+        izquierda.addActionListener (new ActionListener () {    
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                central.Accion_Principal("Izquierda");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+        });
+        arriba.addActionListener (new ActionListener () {    
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                central.Accion_Principal("Arriba");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+        });
+        abajo.addActionListener (new ActionListener () {    
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                central.Accion_Principal("Abajo");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+        });
+        ataque.addActionListener (new ActionListener () {    
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                central.Accion_Principal("Ataque");
+                cuadros();
+                central.Accion_Enemigo_Aliado();
+                cuadros();
+            }
+        });
+        //////////////////////////////////////////////////////////////
         add(pixeles);
-    }
-    public static void main(String[] args){
-        JFrame ventana = new Mapa();
-        ventana.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        ventana.setSize(530,580);
-        ventana.setVisible(true);
+        add(arriba,BorderLayout.NORTH);
+        add(derecha,BorderLayout.EAST);
+        add(abajo,BorderLayout.SOUTH);
+        add(izquierda,BorderLayout.WEST);
+        //add(ataque,BorderLayout.NORTH);
     }
 
-    @Override
+@Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar()=='W' || e.getKeyChar()=='w'){
             System.out.println("w");
@@ -68,27 +124,42 @@ public class Mapa extends JFrame implements KeyListener{
     }
     
     public void cuadros(){
-    //Elimina los cubos de la lista-Actualiza el tablero
-    CantidadAliados = central.getCantidad_entidades("Aliado");
-    CantidadEnemigos = central.getCantidad_entidades("Enemigo");
-    if(Ciclo1>0){
-        for(Ciclo1=0;Ciclo1<(1+CantidadAliados+CantidadEnemigos);Ciclo1++){
-            pixeles.Eliminar();
+        //Elimina los cubos de la lista-Actualiza el tablero
+        CantidadAliados = central.getCantidad_entidades("Aliado");
+        CantidadEnemigos = central.getCantidad_entidades("Enemigo");
+        if(Ciclo1>0){
+            for(Ciclo1=0;Ciclo1<(1+CantidadAliados+CantidadEnemigos);Ciclo1++){
+                pixeles.Eliminar();
+            }
         }
+
+        for(Ciclo1=0;Ciclo1<CantidadAliados;Ciclo1++){
+            if (central.getVisible(Ciclo1)==true){
+                pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Aliado"),central.getPosicion(Ciclo1, "Y", "Aliado"),3);
+                pixeles.Agregar(q); 
+            }
+            else{
+                pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Aliado"),central.getPosicion(Ciclo1, "Y", "Aliado"),5);
+                pixeles.Agregar(q); 
+            }
+              
+        }
+
+        for(Ciclo1=0;Ciclo1<CantidadEnemigos;Ciclo1++){
+            pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Enemigo"),central.getPosicion(Ciclo1, "Y", "Enemigo"),2);
+            pixeles.Agregar(q);   
+        }
+        pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Principal"),central.getPosicion(Ciclo1, "Y", "Principal"),1);
+        pixeles.Agregar(q);
+        add(pixeles);
     }
 
-    for(Ciclo1=0;Ciclo1<CantidadAliados;Ciclo1++){
-
-        pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Aliado"),central.getPosicion(Ciclo1, "Y", "Aliado"),3);
-        pixeles.Agregar(q);   
+    public static void main(String[] args){
+        JFrame ventana = new Mapa();
+        ventana.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        ventana.setSize(530,580);
+        ventana.setVisible(true);
     }
 
-    for(Ciclo1=0;Ciclo1<CantidadEnemigos;Ciclo1++){
-        pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Enemigo"),central.getPosicion(Ciclo1, "Y", "Enemigo"),2);
-        pixeles.Agregar(q);   
-    }
-    pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Principal"),central.getPosicion(Ciclo1, "Y", "Principal"),1);
-    pixeles.Agregar(q);
-    add(pixeles);
-    }
+    
 }

@@ -1,4 +1,4 @@
-public abstract class Entidades {
+public abstract class Entidades implements Observer{
     public boolean Ayudando_Atacando;
     public int PosicionX;
     public int PosicionY;
