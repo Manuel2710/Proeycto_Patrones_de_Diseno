@@ -14,6 +14,7 @@ public class Mapa extends JFrame implements KeyListener{
     int Ciclo2;
     int CantidadAliados;
     int CantidadEnemigos;
+    int Atacando;
 
     public Mapa(){
         pixeles = new ListaPixeles();
@@ -22,6 +23,7 @@ public class Mapa extends JFrame implements KeyListener{
         JButton arriba = new JButton("arriba");
         JButton abajo = new JButton("abajo");
         JButton ataque = new JButton("ataque");
+        Atacando=1;
         CantidadAliados=20;
         CantidadEnemigos=6;
         //Se imprime el tablero
@@ -75,16 +77,17 @@ public class Mapa extends JFrame implements KeyListener{
                 central.Accion_Principal("Ataque");
                 cuadros();
                 central.Accion_Enemigo_Aliado();
+                Atacando=2;
                 cuadros();
             }
         });
         //////////////////////////////////////////////////////////////
         add(pixeles);
-        add(arriba,BorderLayout.NORTH);
+        //add(arriba,BorderLayout.NORTH);
         add(derecha,BorderLayout.EAST);
         add(abajo,BorderLayout.SOUTH);
         add(izquierda,BorderLayout.WEST);
-        //add(ataque,BorderLayout.NORTH);
+        add(ataque,BorderLayout.NORTH);
     }
 
 @Override
@@ -128,8 +131,18 @@ public class Mapa extends JFrame implements KeyListener{
         CantidadAliados = central.getCantidad_entidades("Aliado");
         CantidadEnemigos = central.getCantidad_entidades("Enemigo");
         if(Ciclo1>0){
-            for(Ciclo1=0;Ciclo1<(1+CantidadAliados+CantidadEnemigos);Ciclo1++){
-                pixeles.Eliminar();
+            if (Atacando==1 || Atacando==2){
+                for(Ciclo1=0;Ciclo1<(1+CantidadAliados+CantidadEnemigos);Ciclo1++){
+                    pixeles.Eliminar();
+                }
+            }
+            else{
+                if (Atacando == 3){
+                    for(Ciclo1=0;Ciclo1<(2+CantidadAliados+CantidadEnemigos);Ciclo1++){
+                        pixeles.Eliminar();
+                    }
+                    Atacando=1;
+                }
             }
         }
 
@@ -149,6 +162,26 @@ public class Mapa extends JFrame implements KeyListener{
             pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Enemigo"),central.getPosicion(Ciclo1, "Y", "Enemigo"),2);
             pixeles.Agregar(q);   
         }
+        if (Atacando==2){
+            if (central.getPosicion_Ataque()=="Arriba"){
+                pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Principal"),central.getPosicion(Ciclo1, "Y", "Principal")-1,0);
+                pixeles.Agregar(q);
+            }
+            if (central.getPosicion_Ataque()=="Abajo"){
+                pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Principal"),central.getPosicion(Ciclo1, "Y", "Principal")+1,0);
+                pixeles.Agregar(q);
+            }
+            if (central.getPosicion_Ataque()=="Derecha"){
+                pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Principal")+1,central.getPosicion(Ciclo1, "Y", "Principal"),0);
+                pixeles.Agregar(q);
+            }
+            if (central.getPosicion_Ataque()=="Izquierda"){
+                pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Principal")-1,central.getPosicion(Ciclo1, "Y", "Principal"),0);
+                pixeles.Agregar(q);
+            }
+            Atacando=3;
+        }
+        Ciclo1=1;
         pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Principal"),central.getPosicion(Ciclo1, "Y", "Principal"),1);
         pixeles.Agregar(q);
         add(pixeles);

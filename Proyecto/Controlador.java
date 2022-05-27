@@ -33,12 +33,12 @@ public class Controlador {
                 prota.agregar(nuevo);
                 misAtacantes.add(nuevo);
                 Cantidad_Enemigos+=1;
+            }
         }
         else{
-            prota.Ataque=true;
+            prota.atacar();
         }
         turno=turno+1;
-    }
     }
 
     public void Accion_Enemigo_Aliado(){
@@ -112,6 +112,14 @@ public class Controlador {
             }
         }
         return null;
+    }
+
+    public int getVida(){
+        return prota.Vida;
+    }
+
+    public String getPosicion_Ataque(){
+        return prota.Movimiento;
     }
     
 }

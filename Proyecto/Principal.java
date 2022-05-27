@@ -50,6 +50,13 @@ public class Principal implements Observado{
     public void AumentarVida(){
         Vida=Vida+1;
     }
+
+    public void atacar(){
+        Ataque=true;
+        notificarObserver();
+        Ataque=false;
+    }
+
     @Override
     public void agregar(Observer o) {
         observadores.add(o);

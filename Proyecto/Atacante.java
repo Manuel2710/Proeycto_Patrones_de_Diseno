@@ -10,11 +10,9 @@ public class Atacante extends Entidades implements Observer{
     }
     //Se restablece la vida y se genera una nueva ubicación
     public void VolverAparecer(){
-        if (Ayudando_Atacando==true){
-            Ayudando_Atacando = false;
-            PosicionX=rand.nextInt(50+1);
-            PosicionY=rand.nextInt(50+1);
-        }
+        Ayudando_Atacando = false;
+        PosicionX=rand.nextInt(50+1);
+        PosicionY=rand.nextInt(50+1);
         return;
     }
     public boolean getAyudando_Atacando() {
@@ -61,31 +59,29 @@ public class Atacante extends Entidades implements Observer{
         if (PosicionX == CordenadaX && PosicionY == CordenadaY){
             Ayudando_Atacando=true;
         }
-        else{
-            if(Ataque==true){
-                switch(Direccion){
-                    case "Abajo":
-                        if (PosicionX == CordenadaX && (PosicionY - CordenadaY) == 1){
-                            VolverAparecer();
-                        }
-                        break;
-                    case "Arriba":
-                        if (PosicionX == CordenadaX && (PosicionY - CordenadaY) == -1){
-                            VolverAparecer();
-                        }
-                        break;
-                    case "Derecha":
-                        if (PosicionY == CordenadaY && (PosicionX - CordenadaX) == 1){
-                            VolverAparecer();
-                        }
-                        break;
-                    case "Izquierda":
-                        if (PosicionY == CordenadaY && (PosicionX - CordenadaX) == -1){
-                            VolverAparecer();
-                        }
-                        break;
+        if(Ataque==true){
+            switch(Direccion){
+                case "Abajo":
+                    if (PosicionX == CordenadaX && (PosicionY - CordenadaY) == 1){
+                        VolverAparecer();
+                    }
+                    break;
+                case "Arriba":
+                    if (PosicionX == CordenadaX && (PosicionY - CordenadaY) == -1){
+                        VolverAparecer();
+                    }
+                    break;
+                case "Derecha":
+                    if (PosicionY == CordenadaY && (PosicionX - CordenadaX) == 1){
+                        VolverAparecer();
+                    }
+                    break;
+                case "Izquierda":
+                    if (PosicionY == CordenadaY && (PosicionX - CordenadaX) == -1){
+                        VolverAparecer();
+                    }
+                    break;
                 }
-            }
         }
     }
 }
