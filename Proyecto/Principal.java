@@ -16,6 +16,12 @@ public class Principal implements Observado{
         Vida = 3;
         observadores = new ArrayList<Observer>();
     }
+    public void Reinicio(){
+        PosicionX = 0;
+        PosicionY = 0;
+        Ataque = false;
+        Vida = 3;
+    }
     public void Movimiento (String Mover){
         Movimiento = Mover;
     }
@@ -63,7 +69,9 @@ public class Principal implements Observado{
     }
     @Override
     public void eliminar(Observer o) {
-        // TODO Auto-generated method stub
+        for (int Ciclo=observadores.size();Ciclo==0;Ciclo--){
+            observadores.remove (observadores.size() - 1);
+        }
         
     }
     @Override

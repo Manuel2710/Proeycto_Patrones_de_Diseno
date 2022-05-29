@@ -8,7 +8,6 @@ public class Atacante extends Entidades implements Observer{
         PosicionY=rand.nextInt(50+1);
         
     }
-    //Se restablece la vida y se genera una nueva ubicación
     public void VolverAparecer(){
         Ayudando_Atacando = false;
         PosicionX=rand.nextInt(50+1);
@@ -34,12 +33,7 @@ public class Atacante extends Entidades implements Observer{
     }
 
     public void Mover(){
-        if (PosicionXPrincipal>PosicionX){
-            PosicionX=PosicionX+1;
-        }
-        if (PosicionXPrincipal<PosicionX){
-            PosicionX=PosicionX-1;
-        }
+
         if (PosicionXPrincipal==PosicionX){
             if (PosicionYPrincipal>PosicionY){
                 PosicionY=PosicionY+1;
@@ -51,6 +45,15 @@ public class Atacante extends Entidades implements Observer{
                 Ayudando_Atacando=true;
             }
         }
+
+        if (PosicionXPrincipal>PosicionX){
+            PosicionX=PosicionX+1;
+        }
+        
+        if (PosicionXPrincipal<PosicionX){
+            PosicionX=PosicionX-1;
+        }
+        
     }
 
     public void update(int CordenadaX, int CordenadaY, boolean Ataque, String Direccion) {

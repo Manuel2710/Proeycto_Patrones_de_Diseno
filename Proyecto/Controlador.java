@@ -17,8 +17,25 @@ public class Controlador {
         Ciclo=0;
         turno=0;
     }
-
+//////////////////////////////////////////////////////////
+    public void Reiniciar(){
+        int tope = Cantidad_Aliados;
+        for (Ciclo=0;Ciclo<tope;Ciclo++){
+            misAliados.remove (misAliados.size() - 1);
+            Cantidad_Aliados=Cantidad_Aliados-1;
+        }
+        tope = Cantidad_Enemigos;
+        for (Ciclo=0;Ciclo<tope;Ciclo++){
+            misAtacantes.remove (misAtacantes.size() - 1);
+            Cantidad_Enemigos=Cantidad_Enemigos-1;
+        }
+        prota.Reinicio();
+    }
+////////////////////////////////////////////////////////////
     public void Accion_Principal(String Mov){
+        if (prota.Vida==0){
+            return;
+        }
         if (Mov != "Ataque"){
             prota.Movimiento(Mov);
             prota.Cambio_Posicion();
@@ -42,6 +59,9 @@ public class Controlador {
     }
 
     public void Accion_Enemigo_Aliado(){
+        if (prota.Vida==0){
+            return;
+        }
         for(Ciclo=0;Ciclo<(Cantidad_Aliados);Ciclo++){
             if(misAliados.get(Ciclo).getAyudando_Atacando()){
                 prota.AumentarVida();

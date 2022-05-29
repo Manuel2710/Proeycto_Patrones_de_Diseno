@@ -9,7 +9,6 @@ public class Aliado extends Entidades implements Observer{
         PosicionX=rand.nextInt(50+1);
         PosicionY=rand.nextInt(50+1);
     }
-    //Se restablece la vida y se genera una nueva ubicación
     public void VolverAparecer(){
         if (Ayudando_Atacando==true){
             Ayudando_Atacando = false;

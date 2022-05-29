@@ -1,4 +1,9 @@
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -10,13 +15,17 @@ public class Mapa extends JFrame{
     int CantidadAliados;
     int CantidadEnemigos;
     int Atacando;
+    JLabel texto;
+    JPanel PanelTexto;
 
     public Mapa(){
         pixeles = new ListaPixeles();
-        
+        texto = new JLabel("Vida: "); 
+        PanelTexto = new JPanel();
+        PanelTexto.add(texto, BorderLayout.SOUTH);
         Atacando=1;
-        CantidadAliados=20;
-        CantidadEnemigos=6;
+        CantidadAliados=0;
+        CantidadEnemigos=0;
         //Se imprime el tablero
         for (Ciclo1=0;Ciclo1<51;Ciclo1++){
             for(Ciclo2=0;Ciclo2<51;Ciclo2++){
@@ -29,9 +38,11 @@ public class Mapa extends JFrame{
         addKeyListener(teclado);
         //////////////////////////////////////////////////////////////
         add(pixeles);
+        add(PanelTexto,BorderLayout.NORTH);
     }
     
     public void cuadros(){
+        texto.setText("Vida: "+central.getVida());
         //Elimina los cubos de la lista-Actualiza el tablero
         if(Ciclo1>0){
             if (Atacando==1 || Atacando==2){
@@ -90,6 +101,10 @@ public class Mapa extends JFrame{
         pintar q = new pintar(central.getPosicion(Ciclo1, "X", "Principal"),central.getPosicion(Ciclo1, "Y", "Principal"),1);
         pixeles.Agregar(q);
         add(pixeles);
+        if (central.getVida()<=0){
+            JOptionPane.showMessageDialog(PanelTexto, "Reiniciar la partidad");
+            central.Reiniciar();
+        }
     }
 
     public static void main(String[] args){
